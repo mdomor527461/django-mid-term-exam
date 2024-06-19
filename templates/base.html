@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    {%load static%}
+    <!-- nav start  -->
+    <nav class="navbar navbar-expand-lg bg-primary p-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img
+            src="{% static 'images/logo.jpg'%}"
+            alt="logo"
+            style="width: 60px; height: 60px; border-radius: 50%"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active text-light fs-3"
+                aria-current="page"
+                href="{%url 'homepage'%}"
+                >Home</a
+              >
+            </li>
+          </ul>
+          <div class="d-flex" role="search">
+            {%if user.is_authenticated%}
+            <a href="{%url 'profile' %}" class="btn btn-light p-2">profile</a>
+            <a href="{%url 'logout'%}" class="btn btn-danger p-2 mx-3">logout</a>
+            {%else%}
+            <a href="{% url 'signup'%}" class="btn btn-success p-2">signup</a>
+            <a href="{%url 'login'%}" class="btn btn-warning p-2 mx-3">login</a>
+            {%endif%}
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <h3> <p{% if message.tags %} class="bg-{{message.tags }} p-2 text-center"{% endif %}>{{ message }}</p></h3>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <!-- nav end  -->
+    {%block content%}
+    <!-- banner start  -->
+    <h1 class="text-dark text-center mt-5 mb-5">BSF Online Cars</h1>
+    <div class="container d-flex flex-wrap mt-5">
+      <div class="col-6 mt-5">
+        <img src="{%static 'images/red.png'%}" alt="" style="width: 90%" />
+      </div>
+      <div class="col-6 mt-5">
+        <p class="fs-5">
+          A car advertisement should captivate potential buyers by highlighting
+          key features and benefits. Here's an example: Discover the all-new XYZ
+          Sedan where luxury meets performance. Designed for the modern driver,
+          the XYZ Sedan boasts a sleek, aerodynamic design and a powerful 2.0L
+          turbocharged engine, delivering an exhilarating driving experience.
+          Enjoy unparalleled comfort with leather-trimmed seats and advanced
+          climate control. Stay connected with our state-of-the-art infotainment
+          system featuring a touchscreen display, Apple CarPlay, and Android
+          Auto integration. Safety is paramount with adaptive cruise control,
+          lane-keeping assist, and a 5-star safety rating. Experience the future
+          of driving. Visit your local dealer today and test drive the
+          revolutionary XYZ Sedan. Drive smarter, live better.
+        </p>
+      </div>
+    </div>
+
+    <!-- banner end -->
+
+    <!-- brand wise filter -->
+    <h1 class="text-info text-center mt-5 mb-5">Choose your Brands</h1>
+    <div class="d-flex flex-wrap justify-content-center">
+      {%for brand in brands%}
+      <div
+        class="card col-3 mx-3 mt-2 mb-2"
+        style="width: 18rem; background-color: rgb(204, 222, 227)"
+      >
+        <a
+          href="{%url 'brand_wise_car' brand.slug %}"
+          class="text-center text-decoration-none text-dark p-2"
+          >{{brand.brand_name}}</a
+        >
+      </div>
+      {%endfor%}
+    </div>
+    <!-- display start  -->
+    <h1 class="text-info text-center mt-5 mb-5">Our Collections</h1>
+    <h1 class="text-info text-center mt-5 mb-5">{{data | length}} Item Found</h1>
+    <div class="d-flex flex-wrap justify-content-center">
+      {%for car in data%}
+      <div class="card col-3 mx-3 mt-5 mb-5 p-3" style="width: 18rem;border: 2px solid black;background-color: rgb(255, 220, 196);">
+        <img class="card-img-top" src="{{car.img.url}}" alt="Car image" />
+        <div class="card-body" >
+           <h3 >{{car.name}}</h3>
+          <h5>Car Price : {{car.price}}$</h5>
+          <h5>Available Quantity : {{car.quantity}}</h5>
+          <h5>Brand : {{car.brand.brand_name}}</h5>
+          <h5 class="mt-3 text-center"><a href="{%url 'details' car.id %}" class="text-decoration-none text-dark btn btn-success p-2">View Details</a></h5>
+        </div>
+      </div>
+
+      {%endfor%}
+    </div>
+    {%endblock%}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

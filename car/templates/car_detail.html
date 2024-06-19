@@ -1,0 +1,82 @@
+{% extends 'base.html'%} {%block content%} {% load crispy_forms_tags%}
+{% if user.is_authenticated%}
+<div class="col-12 d-flex flex-wrap justify-content-center">
+  <div class="card m-3">
+    <div class="card-body" style="background-color: antiquewhite">
+      <img
+        class="card-img-top"
+        src="{{car.img.url}}"
+        alt="Card image cap"
+        style="width: 100%; margin: auto"
+      />
+      <h1 class="text-center mt-3 mb-2 text-decoration-underline">Details</h1>
+      <h2 class="card-title p-3 text-center">
+        <a>Car Name : {{car.name}}</a>
+      </h2>
+      <h4 class="card-text p-3 text-center">Car Price : {{car.price}}</h4>
+      <h4 class="card-text p-3 text-center">Brand Name : {{car.brand}}</h4>
+      <h4 class="card-text p-3 text-center">Desc : {{car.description}}</h4>
+      <h4 class="card-text p-3 text-center">
+       <h4 class="card-text p-3 text-center"> AvailAble Quantity : {{car.quantity}}</h4>
+       <h4 class="card-text p-3 text-center"><a href="{%url 'postupdate' car.id %}" class="btn btn-success p-2">Order Now</a></h4>
+
+      
+    </div>
+  </div>
+</div>
+<div class="card m-3">
+  <h2 class="text-center">Total comments :{{comments | length}}</h2>
+  {%for comment in comments%}
+  <div class="card-body border">
+    <p><b>{{comment.name}}</b> {{comment.created_on}}</p>
+    <p>{{comment.body}}</p>
+  </div>
+  {%endfor%}
+</div>
+{%else%}
+<div class="col-12 d-flex flex-wrap justify-content-center">
+  <div class="card m-3">
+    <div class="card-body" style="background-color: antiquewhite">
+      <img
+        class="card-img-top"
+        src="{{car.img.url}}"
+        alt="Card image cap"
+        style="width: 100%; margin: auto"
+      />
+      <h1 class="text-center mt-3 mb-2 text-decoration-underline">Details</h1>
+      <h2 class="card-title p-3 text-center">
+        <a>Car Name : {{car.name}}</a>
+      </h2>
+      <h4 class="card-text p-3 text-center">Car Price : {{car.price}}</h4>
+      <h4 class="card-text p-3 text-center">Brand Name : {{car.brand}}</h4>
+      <h4 class="card-text p-3 text-center">Desc : {{car.description}}</h4>
+      <h4 class="card-text p-3 text-center">
+       <h4 class="card-text p-3 text-center"> AvailAble Quantity : {{car.quantity}}</h4>
+       <h4 class="card-text p-3 text-center"><a href="{%url 'postupdate' car.id%}" class="btn btn-success p-2">Buy Now</a></h4>
+      
+    </div>
+  </div>
+</div>
+<div class="card m-3">
+  <h2 class="text-center">Total comments :{{comments | length}}</h2>
+  {%for comment in comments%}
+  <div class="card-body border">
+    <p><b>{{comment.name}}</b> {{comment.created_on}}</p>
+    <p>{{comment.body}}</p>
+  </div>
+  {%endfor%}
+</div>
+{%endif%}
+<div class="card m-3">
+  <div class="card-body">
+    <form method="POST" style="width: 35%; margin: auto">
+      <h1>Add Comment</h1>
+      {%csrf_token%} 
+      {{form | crispy}}
+      <button class="btn btn-primary p-2 mt-3 mb-3 text-center" type="submit">
+        submit
+      </button>
+    </form>
+  </div>
+</div>
+{%endblock%}

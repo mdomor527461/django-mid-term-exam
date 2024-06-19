@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{%block  content%}
+<h1 class="text-center text-info mt-5 mb-5">this is profile page</h1>
+<div class="d-flex flex-wrap justify-content-center">
+    <a href="{%url 'edit_profile'%} " class="btn btn-success p-2 mt-5">Edit Profile</a>
+</div>
+
+<h1 class="text-info text-center mt-5 mb-5">{{cars | length}} Item Found</h1>
+<div class="d-flex flex-wrap justify-content-center">
+  {%for car in cars%}
+  <div class="card col-3 mx-3 mt-5 mb-5 p-3" style="width: 18rem;border: 2px solid black;background-color: rgb(255, 220, 196);">
+    <img class="card-img-top" src="{{car.img.url}}" alt="Car image" />
+    <div class="card-body" >
+       <h3 ><a href="{%url 'details' car.id %}" class="text-decoration-none text-dark">Car Name : {{car.name}}</a></h3>
+      <h5>Car Price : {{car.price}}$</h5>
+      <h5>Available Quantity : {{car.quantity}}</h5>
+      <h5>Brand : {{car.brand.brand_name}}</h5>
+      
+    </div>
+  </div>
+
+  {%endfor%}
+</div>
+{%endblock%}
